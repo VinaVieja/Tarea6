@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gráfico de Superhéroes</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<bo>
+  <div class="container py-5">
+    <h1 class="mb-4 text-center">Popularidad de Superhéroes</h1>
+    
+    <div class="card shadow p-4">
+      <canvas id="lienzo" height="120"></canvas>
+      <div class="d-grid mt-4">
+        <button id="obtener-datos" class="btn btn-primary">Obtener Datos</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const lienzo = document.getElementById("lienzo");
+      const btnDatos = document.getElementById("obtener-datos");
+      let grafico = null;
+
+      function renderGraphic() {
+        grafico = new Chart(lienzo, {
+          type: 'bar',
+          data: {
+            labels: [],
+            datasets: [{
+              label: 'Popularidad de Superhéroes',
+              data: [],
+              backgroundColor: 'rgba(54, 162, 235, 0.5)',
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  stepSize: 10, // Cambia a 5 o 1 si lo necesitas
+                  callback: function(value) {
+                    return value; // Puedes agregar + '%' si son porcentajes
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
+
+      btnDatos.addEventListener("click", async () => {
+        try {
+          const response = await fetch('/public/api/getdatainforme2');
+
+          if (!response.ok) {
+            throw new Error('No se pudo establecer comunicación con el servidor.');
+          }
+
+          const data = await response.json();
+
+          if (data.success && Array.isArray(data.resumen)) {
+            const labels = data.resumen.map(row => row.superhero);
+            const valores = data.resumen.map(row => row.popularidad);
+
+            grafico.data.labels = labels;
+            grafico.data.datasets[0].data = valores;
+            grafico.update();
+          } else {
+            alert("Los datos recibidos no son válidos.");
+          }
+
+        } catch (error) {
+          console.error(error);
+          alert("Ocurrió un error al obtener los datos.");
+        }
+      });
+
+      renderGraphic();
+      
+      const amigos=[
+        {amigos: 'Luis',edad:25,ciudad: 'Lima'},
+        {amigos: 'Ana',edad:30,ciudad: 'Arequipa'},
+        {amigos: 'Carlos',edad:28,ciudad: 'Cusco'},
+        {amigos: 'Maria',edad:22,ciudad: 'Trujillo'},
+        {amigos: 'Jose',edad:35,ciudad: 'Chiclayo'}
+      ]
+      let nombres=[]
+      amigos.forEach((element)=>{
+        nombres.push(element.nombre)
+      });
+     const edades= amigos.map
+
+     console.log
+    })
+
+  </script>
+</body>
+</html>

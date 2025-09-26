@@ -1,0 +1,14 @@
+<?php
+header('Content-Type: application/json');
+
+$data = [
+    "success" => true,
+    "message" => "Datos de género obtenidos correctamente.",
+    "resumen" => [
+        [ "genero" => "Male", "total" => 250 ],
+        [ "genero" => "Female", "total" => 180 ],
+        [ "genero" => "Unknown", "total" => 50 ]
+    ]
+];
+
+echo json_encode($data);

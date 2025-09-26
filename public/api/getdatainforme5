@@ -1,0 +1,13 @@
+<?php
+// Cargar autoload y bootstrapping de CodeIgniter (si usas framework o carga manual)
+require_once '../../app/Config/Boot.php';
+require_once '../../app/Config/Routes.php';
+require_once '../../app/Controllers/DashboardController.php';
+
+use App\Controllers\DashboardController;
+
+header('Content-Type: application/json');
+
+$controller = new DashboardController();
+
+echo $controller->getDataInforme5();
