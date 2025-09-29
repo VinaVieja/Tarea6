@@ -37,3 +37,9 @@ $routes->get('public/api/getdatainforme4', 'DashboardController::getDataInforme4
 
 //xlsx
 $routes->get('/reportes/excel1',']ReporteController::getExcel1');
+// Tarea
+$routes->get('/generador', 'GerenadorController::index');
+
+$routes->get('/actividad', 'GerenadorController::actividad');
+$routes->post('/actividad/buscador', 'GerenadorController::buscador');
+$routes->get('/actividad/poderes/(:num)', 'ReporteController::getReporte5/$1');
